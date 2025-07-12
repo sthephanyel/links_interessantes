@@ -1,22 +1,22 @@
 'use client'
-import { useCategoriesQuery } from '@/generated/graphql';
 import React, {memo} from 'react';
 
-function Categories(){
+function DashBoard(){
 
-    const [{data, fetching}] = useCategoriesQuery()
+    // const [{data, fetching}] = useCategoriesQuery()
     
     return(
-        <div className='flex flex-col w-full min-h-screen'>
-           {data?.categories.map((item)=>{
-                return(
-                    <div key={item.id} className="flex flex-col m-2 p-4">
-                        <h1 className='text-2xl font-iris text-baseColors-text_ligth'>{item.name}</h1>
-                    </div>
-                )
-            })}
-        </div>
+        <main className='flex flex-col w-full min-h-auto rounded-b-lg bg-default-white'>
+            <div className='flex flex-col rounded-b-lg bg-default-black'>
+                <div className="flex flex-col w-full h-32 justify-center items-center">
+                    <h1 className='text-7xl font-bold'>Dash</h1>
+                </div>
+                <div className="flex w-full justify-center items-center">
+                    <h1 className='text-xl'>Descubra sites curiosos, divertidos e fora do comum.</h1>
+                </div>
+            </div>
+        </main>
     )
 }
 
-export default memo(Categories)
+export default memo(DashBoard)
