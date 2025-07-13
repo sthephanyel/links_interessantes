@@ -3,7 +3,7 @@ import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: `${process.env.NEXT_PUBLIC_HYGRAPQL_API}`,
+  schema: ``,
   documents: "src/**/*.graphql",
   generates: {
     "src/generated/graphql.tsx": {

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bungee_Tint, Geist, Geist_Mono, Irish_Grover, Kelly_Slab, Merriweather, Roboto } from "next/font/google";
+import {  Irish_Grover } from "next/font/google";
 import "./globals.css";
 import { LibUrqlChildren } from "@/lib/libUrqlChildren";
 

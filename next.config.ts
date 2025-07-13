@@ -14,6 +14,12 @@ const nextConfig: NextConfig = {
         hostname: 'media.graphassets.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'flowbite.s3.amazonaws.com',
+        port: '',
+        pathname: '/**',
       }
     ],
   },

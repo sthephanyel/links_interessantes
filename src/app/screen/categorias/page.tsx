@@ -1,4 +1,5 @@
 'use client'
+import Loading from '@/app/loading';
 import { useCategoriesQuery } from '@/generated/graphql';
 import React, {memo} from 'react';
 
@@ -6,7 +7,9 @@ function Categorias(){
 
     const [{data, fetching}] = useCategoriesQuery()
 
-    console.log('data', data)
+    if (fetching){
+        return <Loading></Loading>
+    }
     
     return(
         <div className='flex flex-col w-full min-h-screen'>

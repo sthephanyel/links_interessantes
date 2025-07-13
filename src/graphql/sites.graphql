@@ -1,0 +1,8 @@
+query Sites {
+  sites {
+    id
+    name
+    link
+    validation
+  }
+}
