@@ -1,0 +1,19 @@
+query Sites_Paginados($first: Int!, $skip: Int!, $search: String!) {
+  sites(
+      orderBy: updatedAt_DESC, 
+      first: $first, 
+      skip: $skip, 
+      where: {_search: $search}
+    ) {
+    id
+    name
+    description
+    link
+    stage
+    validation
+    category {
+      id
+      name
+    }
+  }
+}

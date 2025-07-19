@@ -8,6 +8,8 @@
   --default-gold: #E2C044;
   --default-white: #D3D0CB;
   --default-gray: #393E41;
+
+  --default-description-gray: #949aa0;
 }
 
 @theme inline {
@@ -18,6 +20,8 @@
   --color-default-white: var(--default-white);
   --color-default-green: var(--default-green);
   --color-default-gray: var(--default-gray);
+
+  --color-default-description-gray: var(--default-description-gray);
   /* --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono); */
   --font-default: '--font-iris';

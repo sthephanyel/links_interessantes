@@ -2,7 +2,11 @@ query Sites {
   sites {
     id
     name
+    description
     link
+    previa {
+      url
+    }
     validation
   }
 }
