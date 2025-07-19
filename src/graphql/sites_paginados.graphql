@@ -16,4 +16,14 @@ query Sites_Paginados($first: Int!, $skip: Int!, $search: String!) {
       name
     }
   }
+  sitesConnection(first: $first, skip: $skip) {
+    pageInfo {
+      pageSize
+      hasNextPage
+      hasPreviousPage
+    }
+    aggregate {
+      count
+    }
+  }
 }

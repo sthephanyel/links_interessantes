@@ -17,8 +17,17 @@ function usePagination({first, skip, search, query}: ParamsPagination) {
             search: search // parametro de pesquisa
         }
     });
-    console.log('result', result.data)
-    return { data: result.data , fetching: result.fetching , reexecuteQuery };
+    
+    return { 
+        data: result.data, 
+        fetching: result.fetching, 
+        count: result.data?.sitesConnection.aggregate.count,
+        page_info: {
+            hasNextPage: result.data?.sitesConnection?.pageInfo?.hasNextPage,
+            hasPreviousPage: result.data?.sitesConnection?.pageInfo?.hasPreviousPage,
+            pageSize: result.data?.sitesConnection?.pageInfo?.hasPreviousPage
+        },
+        reexecuteQuery };
 }
 
 export default usePagination;

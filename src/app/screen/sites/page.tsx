@@ -20,12 +20,12 @@ interface ItensCard {
 
 function Sites(){
 
-    const [first, setFirst] = useState(5);
+    const [first, setFirst] = useState(10);
     const [skip, setSkip] = useState(0);
     const [search, setSearch] = useState('');
     const [dataItens, setDataItens] = useState([])
 
-    const { data, fetching, reexecuteQuery } = usePagination(
+    const { data, fetching, count, page_info, reexecuteQuery } = usePagination(
         {
             first: first, 
             skip: skip, 
@@ -43,7 +43,6 @@ function Sites(){
         () => {
             // DIVIDE OS ELEMENTOS
             // SERVE PARA CRIAR A PAGINA PARECIDA COM O PINTEREST
-            // const dataRequest = data ? data?.sites : [] ;
             const resultado = [];
 
             const tamanhoBase = Math.floor(dataItens.length / numberColumns);
@@ -79,9 +78,20 @@ function Sites(){
     // CONTROLA DA PAGINACAO
     function controlPaginationItens (){
         if (fetching) return;
+        let sumPaginationSize = skip + first;
+
+        // REVERIFICA SE EXISTE HASNEXTPAGE
+        if (!page_info.hasNextPage){
+            return console.log('numero total de elementos por pagina atingido')
+            // return
+        }
+        // CASO A PRIMEIRA VEZ SEJA MAIOR, COLOCA O COUNT
+        if (sumPaginationSize > count){
+            sumPaginationSize = count
+        }
+
         // CONTROLA OS ITEMS DA PAGINACAO
-        const skip_params = skip + first;
-        setSkip(skip_params)
+        setSkip(sumPaginationSize)
         
 
         const timerId = setTimeout(() => {
@@ -95,7 +105,7 @@ function Sites(){
     const RenderItem = (item: ItensCard) =>{
         const res = item.item
         return (
-            <button onClick={()=>{redirectSiteUrl(res.link)}} className=' flex bg-default-gray w-full h-full rounded-lg hover:scale-105 ease-out duration-300'>
+            <button onClick={()=>{redirectSiteUrl(res.link)}} className=' flex bg-default-gray w-full h-full rounded-lg mx-1.5 hover:scale-105 ease-out duration-300'>
                 <div className={`${res.validation ? 'bg-green-500':'bg-amber-500'} w-3 rounded-l-lg`}/>
                 <div className='flex flex-col w-full justify-center  items-center rounded-r-lg'>
                     <div className='flex w-full h-full justify-center items-center'>
@@ -138,9 +148,9 @@ function Sites(){
         }
     }, [data]);
 
-    if (fetching){
-        return <Loading></Loading>
-    }
+    // if (fetching){
+    //     return <Loading></Loading>
+    // }
     
     return(
         <>
@@ -160,7 +170,7 @@ function Sites(){
                                         <div 
                                             key={index_y}
                                             style={{width: (width/numberColumns) - 0, height: `${pseudoRandomFromString(item.id)}px` }} 
-                                            className='flex rounded-lg justify-center items-center text-center ease-out duration-300 hover:bg-sky-700'>
+                                            className='flex rounded-lg justify-center items-center text-center ease-out duration-300'>
                                                 <RenderItem item={item}/>
                                         </div>
                                     )
@@ -170,6 +180,7 @@ function Sites(){
                     })}
                 </div>
             </div>
+            {fetching && <Loading/>}
         </>
     )
 }

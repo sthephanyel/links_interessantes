@@ -4621,7 +4621,7 @@ export type Sites_PaginadosQueryVariables = Exact<{
 }>;
 
 
-export type Sites_PaginadosQuery = { __typename?: 'Query', sites: Array<{ __typename?: 'Site', id: string, name?: string | null, description?: string | null, link?: string | null, stage: Stage, validation?: boolean | null, category: Array<{ __typename?: 'Category', id: string, name: string }> }> };
+export type Sites_PaginadosQuery = { __typename?: 'Query', sites: Array<{ __typename?: 'Site', id: string, name?: string | null, description?: string | null, link?: string | null, stage: Stage, validation?: boolean | null, category: Array<{ __typename?: 'Category', id: string, name: string }> }>, sitesConnection: { __typename?: 'SiteConnection', pageInfo: { __typename?: 'PageInfo', pageSize?: number | null, hasNextPage: boolean, hasPreviousPage: boolean }, aggregate: { __typename?: 'Aggregate', count: number } } };
 
 
 export const CategoriesDocument = gql`
@@ -4672,6 +4672,16 @@ export const Sites_PaginadosDocument = gql`
     category {
       id
       name
+    }
+  }
+  sitesConnection(first: $first, skip: $skip) {
+    pageInfo {
+      pageSize
+      hasNextPage
+      hasPreviousPage
+    }
+    aggregate {
+      count
     }
   }
 }
