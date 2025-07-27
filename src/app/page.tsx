@@ -3,6 +3,8 @@ import { Suspense } from "react";
 import DashBoard from './screen/dashboard/page';
 import Categorias from './screen/categorias/page';
 import Sites from './screen/sites/page';
+import Skeleton from "./screen/sites/components/skeleton";
+import Loading from "./loading";
 
 export default function Home() {
   return (
@@ -10,7 +12,7 @@ export default function Home() {
       <Suspense fallback={<p>Carregando repositorios...</p>}>
         <DashBoard/>
       </Suspense>
-      <Suspense fallback={<p>Carregando repositorios...</p>}>
+      <Suspense fallback={<Loading/>}>
         <Sites/>
       </Suspense>
     </main>

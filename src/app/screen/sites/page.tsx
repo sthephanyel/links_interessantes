@@ -12,15 +12,16 @@ interface ItensCard {
         name: String;
         description: String;
         validation: boolean;
-        previa: {
-            url: NextURL
-        }
+        category: [{
+            id: Number;
+            name: String;
+        }]
     }
 }
 
 function Sites(){
 
-    const [first, setFirst] = useState(10);
+    const [first, setFirst] = useState(5);
     const [skip, setSkip] = useState(0);
     const [search, setSearch] = useState('');
     const [dataItens, setDataItens] = useState([])
@@ -105,17 +106,30 @@ function Sites(){
     const RenderItem = (item: ItensCard) =>{
         const res = item.item
         return (
-            <button onClick={()=>{redirectSiteUrl(res.link)}} className=' flex bg-default-gray w-full h-full rounded-lg mx-1.5 hover:scale-105 ease-out duration-300'>
-                <div className={`${res.validation ? 'bg-green-500':'bg-amber-500'} w-3 rounded-l-lg`}/>
-                <div className='flex flex-col w-full justify-center  items-center rounded-r-lg'>
-                    <div className='flex w-full h-full justify-center items-center'>
-                        <h1 className='text-2xl'>{res.name}</h1>
-                    </div>
-                    {res.description &&
-                        <div className='flex w-full h-3/12 justify-center items-center border-t-1 border-gray-600'>
-                            <p className='text-xs text-default-description-gray'>{res.description}</p>
+            <button onClick={()=>{redirectSiteUrl(res?.link)}} className='flex bg-default-gray w-full h-full rounded-lg mx-1.5 hover:scale-105 ease-out duration-300'>
+                <div className='flex w-full static'>
+                    <div className='flex static bg-gradient-to-r from-default-green w-full items-center rounded-l-lg'>
+                        <div className={`flex animate-pulse rounded-full ${res?.validation ? 'bg-green-600':'bg-amber-500'} h-2 w-2 ml-5`}></div>
+                        <div className='flex flex-col w-full h-full justify-center items-center rounded-r-lg'>
+                            <div className='flex w-full h-full justify-center items-center'>
+                                <h1 className='text-2xl'>{res?.name}</h1>
+                            </div>
+                            <div className='flex w-full justify-center items-center mb-2'>
+                                {res?.category?.map((item, index)=>{
+                                    return(
+                                        <div key={index} className={`bg-default-gray rounded-lg px-2 mx-1`}>
+                                            {item.name}
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                            {res?.description &&
+                                <div className='flex w-full h-3/12 justify-center items-center border-t-1 border-gray-500'>
+                                    <p className='text-xs text-default-description-gray'>{res?.description}</p>
+                                </div>
+                            }
                         </div>
-                    }
+                    </div>
                 </div>
             </button>
         );
@@ -147,19 +161,15 @@ function Sites(){
             setDataItens(prev => [...prev, ...dataAtual]);
         }
     }, [data]);
-
-    // if (fetching){
-    //     return <Loading></Loading>
-    // }
     
     return(
         <>
+            {fetching && <Loading/>}
             <div>
                 <button className='w-full bg-amber-500 mb-6' onClick={() => controlPaginationItens()}>click pagination</button>
             </div>
-            <div className='flex w-full min-h-screen' ref={componentRef}>
-                <div 
-                    // className={`grid grid-cols-${numberColumns} gap-${numberColumns}`}
+            <div className='flex w-full' ref={componentRef}>
+                <div
                     className={`grid grid-cols-${numberColumns} gap-${numberColumns}`}
                 >
                     {dividindoElementos?.map((item, index_i)=>{
@@ -180,7 +190,6 @@ function Sites(){
                     })}
                 </div>
             </div>
-            {fetching && <Loading/>}
         </>
     )
 }
