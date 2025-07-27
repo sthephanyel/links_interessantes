@@ -6,8 +6,8 @@ function DashBoard(){
     // const [{data, fetching}] = useCategoriesQuery()
     
     return(
-        <main className='flex flex-col w-full min-h-auto mb-12 bg-default-white'>
-            <div className='flex flex-col bg-default-black'>
+        <main className='flex flex-col w-full min-h-auto mb-12'>
+            <div className='flex flex-col dark:bg-default-black'>
                 <div className="flex flex-col w-full h-32 justify-center items-center">
                     <h1 className='text-7xl font-bold'>Dash</h1>
                 </div>

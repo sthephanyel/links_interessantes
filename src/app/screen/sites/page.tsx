@@ -107,17 +107,17 @@ function Sites(){
         return (
             <button onClick={()=>{redirectSiteUrl(res?.link)}} className='flex bg-default-gray w-full h-full rounded-lg mx-1.5 hover:scale-105 ease-out duration-300'>
                 <div className='flex w-full static'>
-                    <div className='flex static bg-gradient-to-r from-default-green w-full items-center rounded-l-lg'>
+                    <div className='flex static bg-gradient-to-r from-default-black dark:from-default-green w-full items-center rounded-l-lg'>
                         <div className={`flex animate-pulse rounded-full ${res?.validation ? 'bg-green-600':'bg-amber-500'} h-2 w-2 ml-5`}></div>
                         <div className='flex flex-col w-full h-full justify-center items-center rounded-r-lg'>
                             <div className='flex w-full max-sm:w-36 h-full max-h-14 justify-center items-center px-2'>
-                                <h1 className='text-2xl max-sm:truncate max-sm:text-ellipsis'>{res?.name}</h1>
+                                <h1 className='text-2xl text-white max-sm:truncate max-sm:text-ellipsis'>{res?.name}</h1>
                             </div>
                             <div className='flex w-full h-auto max-sm:flex-col justify-center items-center mb-2 mt-2'>
                                 {res?.category?.map((item, index)=>{
                                     return(
                                         <div key={index} className={`flex bg-default-gray rounded-lg  max-sm:mb-1 px-2 mx-1`}>
-                                            {item.name}
+                                            <h1 className='text-white'>{item.name}</h1>
                                         </div>
                                     )
                                 })}
