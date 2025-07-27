@@ -37,7 +37,7 @@ function Sites(){
 
     const componentRef = useRef(null);
     const [width, setWidth] = useState(0);
-    const [numberColumns, setNumberColumns] = useState(4)
+    const [numberColumns, setNumberColumns] = useState(4);
 
     // DIVIDE OS ELEMENTOS COM BASE NO TAMANHO DA TELA, E COLUNAS CONFIGURADAS
     const dividindoElementos = useMemo(
@@ -81,10 +81,9 @@ function Sites(){
         if (fetching) return;
         let sumPaginationSize = skip + first;
 
-        // REVERIFICA SE EXISTE HASNEXTPAGE
+        // REVERIFICA SE EXISTE HASNEXTPAGE - PARA NÃO EXECUTAR DESNECESSARIAMENTE
         if (!page_info.hasNextPage){
-            return console.log('numero total de elementos por pagina atingido')
-            // return
+            return
         }
         // CASO A PRIMEIRA VEZ SEJA MAIOR, COLOCA O COUNT
         if (sumPaginationSize > count){
@@ -137,20 +136,33 @@ function Sites(){
 
     // ATUALIZA O ESTILO USADO NO GRID
     useEffect(() => {
+        // LARGURA DA PAGINA
         function atualizarLargura() {
             if (componentRef?.current) {
                 const novaLargura = componentRef?.current?.offsetWidth;
                 setWidth(novaLargura);
                 setNumberColumns(novaLargura < 800 ? 2 : 4);
-                // console.log('Nova largura:', novaLargura);
             }
         }
+        // FINAL DA PAGINA
+        const handleScroll = () => {
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (windowHeight + scrollTop >= documentHeight) {
+                controlPaginationItens()
+            }
+        };
 
         setTimeout(atualizarLargura, 0);
-        window.addEventListener('resize', atualizarLargura); // escuta resize
+        window.addEventListener('resize', atualizarLargura);
+        window.addEventListener('scroll', handleScroll);
 
         return () => {
-            window.removeEventListener('resize', atualizarLargura); // cleanup
+            // cleanup
+            window.removeEventListener('resize', atualizarLargura);
+            window.removeEventListener('scroll', handleScroll);
         };
     }, [fetching]);
 
@@ -165,9 +177,6 @@ function Sites(){
     return(
         <>
             {fetching && <Loading/>}
-            <div>
-                <button className='w-full bg-amber-500 mb-6' onClick={() => controlPaginationItens()}>click pagination</button>
-            </div>
             <div className='flex w-full' ref={componentRef}>
                 <div
                     className={`grid grid-cols-${numberColumns} gap-${numberColumns}`}
