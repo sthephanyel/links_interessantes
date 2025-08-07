@@ -1,4 +1,6 @@
 ## DASH
+Vercel: https://links-interessantes.vercel.app
+
 Durante minhas explorações pela internet, sempre me deparei com sites muito úteis, criativos e até curiosos. Verdadeiras joias escondidas que, por algum motivo, não recebem a atenção que merecem. Como forma de não perdê-los de vista, comecei a salvar esses links em um simples bloco de notas, pensando que um dia poderia precisar deles novamente.
 
 Foi então que surgiu a ideia do DASH: um projeto pessoal que reúne esses sites interessantes em um só lugar, de forma organizada, acessível e visualmente agradável. A ideia é facilitar o acesso a ferramentas online incríveis desde editores de imagem gratuitos, plataformas para criar tarefas educativas, até sites que permitem assistir a conteúdos de outros países diretamente do navegador. Tudo isso categorizado e fácil de explorar.
