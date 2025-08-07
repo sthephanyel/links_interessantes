@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import {  Irish_Grover } from "next/font/google";
 import "./globals.css";
 import { LibUrqlChildren } from "@/lib/libUrqlChildren";
+import { NextFontWithVariable } from "next/dist/compiled/@next/font";
 
-export const IrishGrover = Irish_Grover({
+const IrishGrover:NextFontWithVariable = Irish_Grover({
   weight:'400',
   subsets: ['latin'],
   variable: '--font-iris',

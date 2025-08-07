@@ -2,7 +2,6 @@
 import { ReactNode } from "react";
 import { Provider } from "urql";
 import { client } from "./urql";
-import type { AppProps } from 'next/app'
 
   type libUrqlChildrenProps = {
     children: ReactNode;

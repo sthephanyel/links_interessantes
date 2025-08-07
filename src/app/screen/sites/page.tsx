@@ -1,30 +1,32 @@
 'use client'
+import React, {memo, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import Loading from '@/app/loading';
 import { Sites_PaginadosDocument } from '@/generated/graphql';
 import usePagination from '@/utils/usePagination';
 import { NextURL } from 'next/dist/server/web/next-url';
-import React, {memo, useEffect, useMemo, useRef, useState} from 'react';
+
+type SiteDados = {
+    id: number;
+    link: NextURL;
+    name: string;
+    description: string;
+    validation: boolean;
+    category: [{
+        id: number;
+        name: string;
+    }]
+};
 
 interface ItensCard {
-    item: {
-        id: Number;
-        link: NextURL;
-        name: String;
-        description: String;
-        validation: boolean;
-        category: [{
-            id: Number;
-            name: String;
-        }]
-    }
+    item: SiteDados
 }
 
 function Sites(){
 
-    const [first, setFirst] = useState(20);
+    const first = 20;
     const [skip, setSkip] = useState(0);
-    const [search, setSearch] = useState('');
-    const [dataItens, setDataItens] = useState([])
+    const search = '';
+    const [dataItens, setDataItens] = useState<SiteDados[]>([])
 
     const { data, fetching, count, page_info, reexecuteQuery } = usePagination(
         {
@@ -35,7 +37,7 @@ function Sites(){
         }
     );
 
-    const componentRef = useRef(null);
+    const componentRef = useRef<HTMLDivElement | null>(null);
     const [width, setWidth] = useState(0);
     const [numberColumns, setNumberColumns] = useState(4);
 
@@ -52,7 +54,7 @@ function Sites(){
             let inicio = 0;
             // SEPARA EM 4 ARRAYS QUE EQUIVALEM A CADA COLUNA
             for (let i = 0; i < numberColumns; i++) {
-                let tamanho = tamanhoBase + (sobra > 0 ? 1 : 0);
+                const tamanho = tamanhoBase + (sobra > 0 ? 1 : 0);
                 resultado.push(dataItens.slice(inicio, inicio + tamanho));
                 inicio += tamanho;
                 if (sobra > 0) sobra--;
@@ -77,7 +79,7 @@ function Sites(){
     }
 
     // CONTROLA DA PAGINACAO
-    function controlPaginationItens (){
+    const controlPaginationItens = useCallback(() => {
         if (fetching) return;
         let sumPaginationSize = skip + first;
 
@@ -99,7 +101,7 @@ function Sites(){
         }, 1000);
 
         return () => clearTimeout(timerId);
-    }
+    }, [fetching, count, page_info.hasNextPage, reexecuteQuery, skip]);
 
     // RENDERIZANDO OS ITENS
     const RenderItem = (item: ItensCard) =>{
@@ -164,7 +166,7 @@ function Sites(){
             window.removeEventListener('resize', atualizarLargura);
             window.removeEventListener('scroll', handleScroll);
         };
-    }, [fetching]);
+    }, [fetching, controlPaginationItens]);
 
     // ATUALIZA O STATE COM OS VALORES RETORNADOS PELO HOOK
     useEffect(() => {
@@ -188,7 +190,7 @@ function Sites(){
                                     return(
                                         <div 
                                             key={index_y}
-                                            style={{width: (width/numberColumns) - 0, height: `${pseudoRandomFromString(item.id)}px`, minHeight: '10rem' }} 
+                                            style={{width: (width/numberColumns) - 0, height: `${pseudoRandomFromString(String(item.id))}px`, minHeight: '10rem' }} 
                                             className='flex rounded-lg justify-center items-center text-center ease-out duration-300'>
                                                 <RenderItem item={item}/>
                                         </div>
