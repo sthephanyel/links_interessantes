@@ -181,11 +181,11 @@ function Sites(){
             {fetching && <Loading/>}
             <div className='flex w-full' ref={componentRef}>
                 <div
-                    className={`grid grid-cols-${numberColumns} gap-${numberColumns}`}
+                    className={`grid ${numberColumns === 4 ? 'grid-cols-4 gap-4' : 'grid-cols-2 gap-2'}`}
                 >
                     {dividindoElementos?.map((item, index_i)=>{
                         return(
-                            <div key={index_i} className={`grid gap-${numberColumns} h-10 justify-center items-center`}>
+                            <div key={index_i} className={`grid ${numberColumns === 4 ? 'gap-4' : 'gap-2'} h-10 justify-center items-center`}>
                                 {item?.map((item, index_y)=>{
                                     return(
                                         <div 
